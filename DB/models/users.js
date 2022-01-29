@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
             enum: ['rank1', 'rank2']
         }
     }],
+    bugsAssigned: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bug'
+    }],
     description: String
 }, { timestamps: true })
 

@@ -14,4 +14,17 @@ router.get('/:orgId', async(req, res) => {
         })
     }
 })
+router.get('/', async(req, res) => {
+    try {
+        const bugList = await Org.find({}).select('_id')
+        res.status(200).json({
+            message: bugList
+        })
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({
+            message: "Server error"
+        })
+    }
+})
 module.exports = router;

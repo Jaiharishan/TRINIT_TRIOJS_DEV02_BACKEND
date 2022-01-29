@@ -5,7 +5,8 @@ const router = require('express').Router();
 router.post('/', async(req, res) => {
     try {
         const userId = req.jwt_payload._id;
-        const { name, description } = req.body;
+
+
         upload(req, res, async(err) => {
             if (err) {
                 console.log(err);
@@ -13,6 +14,8 @@ router.post('/', async(req, res) => {
                     message: err
                 })
             }
+            const { name, description } = req.body;
+            console.log(req.body)
             const createOrg = new Org({
                 name,
                 description,
