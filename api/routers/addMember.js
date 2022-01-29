@@ -11,16 +11,14 @@ router.put('/:orgId', async(req, res) => {
         const orgDetails = await Org.findById(orgId)
         if (orgDetails.head == headId) {
             if (rank == 'rank1') {
-                let rank1List = orgDetails.rank1
-                rank1List.push(memberId)
-                await Org.findByIdAndUpdate(orgId, { rank1: rank1List })
+                await Org.findByIdAndUpdate(orgId, { $addToSet: { rank1: memberId } })
+                await User.findByIdAndUpdate(memberId, { $addToSet: { employeeAt: { orgId, rank: 'rank1' } } })
                 return res.status(200).json({
                     message: "Member added"
                 })
             } else if (rank == 'rank2') {
-                let rank2List = orgDetails.rank2
-                rank2List.push(memberId)
-                await Org.findByIdAndUpdate(orgId, { rank2: rank2List })
+                await Org.findByIdAndUpdate(orgId, { $addToSet: { rank2: memberId } })
+                await User.findByIdAndUpdate(memberId, { $addToSet: { employeeAt: { orgId, rank: 'rank2' } } })
                 return res.status(200).json({
                     message: "Member added"
                 })

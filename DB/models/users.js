@@ -5,9 +5,19 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     profilePic: String,
-    employeeAt: [{
+    ownOrg: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Organisation'
+    }],
+    employeeAt: [{
+        orgId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Organisation'
+        },
+        rank: {
+            type: String,
+            enum: ['rank1', 'rank2']
+        }
     }],
     description: String
 }, { timestamps: true })

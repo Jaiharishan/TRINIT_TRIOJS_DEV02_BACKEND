@@ -8,6 +8,7 @@ const getOtherUserRouter = require('./routers/getOtherUser');
 const editUserRouter = require('./routers/editUser')
 const createOrgRouter = require('./routers/createOrg')
 const addMemberRouter = require('./routers/addMember')
+const listOrgRouter = require('./routers/listOrg')
 const { verifyJWT } = require('../middlewares/jwt');
 
 // //use the imports here
@@ -15,6 +16,7 @@ const { verifyJWT } = require('../middlewares/jwt');
 // router.use('/users', getUsersRouter)
 // router.use('/user', getOtherUserRouter) // get other users
 router.use('/user/edit', verifyJWT, editUserRouter)
+router.use('/user/orglist', listOrgRouter)
 router.use('/org/create', verifyJWT, createOrgRouter)
 router.use('/org/addMember', verifyJWT, addMemberRouter)
 module.exports = router;
