@@ -5,12 +5,14 @@ const router = require('express').Router();
 router.post('/:orgId', async(req, res) => {
     try {
         const { title, description, severity } = req.body;
+        const userId = req.jwt_payload._id;
         const orgId = req.params.orgId;
         const createBug = new Bug({
             title,
             description,
             severity,
-            orgId
+            orgId,
+            createdBy: userId
         })
         await createBug.save();
         await Org.findByIdAndUpdate(orgId, { $addToSet: { bugs: createBug._id } })

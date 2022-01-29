@@ -1,9 +1,10 @@
 const Org = require('../../DB/models/organisations')
+const Bug = require('../../DB/models/bugs')
 const router = require('express').Router();
 router.get('/:orgId', async(req, res) => {
     try {
         const orgId = req.params.orgId;
-        const bugList = await Org.findById(orgId).populate('bugs').select('bugs')
+        const bugList = await Bug.findById(orgId).populate('bugs').select('bugs')
         res.status(200).json({
             message: bugList
         })
@@ -16,7 +17,7 @@ router.get('/:orgId', async(req, res) => {
 })
 router.get('/', async(req, res) => {
     try {
-        const bugList = await Org.find({}).select('_id')
+        const bugList = await Bug.find({}).select('_id')
         res.status(200).json({
             message: bugList
         })

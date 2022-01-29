@@ -6,7 +6,7 @@ router.get('/:bugId', async(req, res) => {
     try {
         const bugId = req.params.bugId;
         const bugDetails = await Bug.findById(bugId)
-            .populate('comment orgId')
+            .populate('comment orgId assignRequests')
         res.status(200).json({
             message: bugDetails
         })
@@ -21,7 +21,7 @@ router.get('/comment/:commentId', async(req, res) => {
     try {
         const commentId = req.params.commentId;
         const commentDetails = await Discussion.findById(commentId)
-            .populate('comments openedBy')
+            .populate('comments openedBy ')
         res.status(200).json({
             message: commentDetails
         })
