@@ -9,14 +9,20 @@ const editUserRouter = require('./routers/editUser')
 const createOrgRouter = require('./routers/createOrg')
 const addMemberRouter = require('./routers/addMember')
 const listOrgRouter = require('./routers/listOrg')
+const createBugRouter = require('./routers/createBug')
+const addCommentRouter = require('./routers/commentBug')
+const viewCommentRouter = require('./routers/bugDetails')
 const { verifyJWT } = require('../middlewares/jwt');
 
 // //use the imports here
-// router.use('/self', verifyJWT, getUserRouter) // get the primary user
-// router.use('/users', getUsersRouter)
-// router.use('/user', getOtherUserRouter) // get other users
+router.use('/self', verifyJWT, getUserRouter) // get the primary user
+router.use('/users', getUsersRouter)
+router.use('/user', getOtherUserRouter) // get other users
 router.use('/user/edit', verifyJWT, editUserRouter)
 router.use('/user/orglist', listOrgRouter)
 router.use('/org/create', verifyJWT, createOrgRouter)
 router.use('/org/addMember', verifyJWT, addMemberRouter)
+router.use('/bug/create', verifyJWT, createBugRouter)
+router.use('/comment/add', verifyJWT, addCommentRouter)
+router.use('/view/bug', verifyJWT, viewCommentRouter)
 module.exports = router;
