@@ -21,12 +21,16 @@ const bugSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['open', 'close'],
+        enum: ['open', 'closed'],
         default: 'open'
     },
     severity: {
         type: String,
         enum: ['mild', 'moderate', 'severe']
+    },
+    visibility: {
+        type: String,
+        enum: ['private', 'public']
     },
     closedAt: Date,
     comment: [{

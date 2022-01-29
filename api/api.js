@@ -15,6 +15,7 @@ const viewCommentRouter = require('./routers/bugDetails')
 const orgDetailsRouter = require('./routers/Allorgs')
 const bugListRouter = require('./routers/bugList')
 const assignBugRouter = require('./routers/assignBug')
+const closeBugRouter = require('./routers/closeBug')
 const { verifyJWT } = require('../middlewares/jwt');
 
 // //use the imports here
@@ -31,4 +32,5 @@ router.use('/view/bug', viewCommentRouter)
 router.use('/view/bugList', bugListRouter)
 router.use('/view/orgs', orgDetailsRouter)
 router.use('/bug/assign', verifyJWT, assignBugRouter)
+router.use('/bug/close', verifyJWT, closeBugRouter)
 module.exports = router;

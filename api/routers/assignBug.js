@@ -16,7 +16,7 @@ router.post('/member/:bugId/:memberId', async(req, res) => {
                 message: "Member assigned to the bug"
             })
         } else {
-            return res.status(400).json({
+            return res.status(403).json({
                 message: "You are not authorized"
             })
         }
