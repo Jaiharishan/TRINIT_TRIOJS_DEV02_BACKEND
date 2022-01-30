@@ -4,15 +4,20 @@ const router = require('express').Router();
 
 router.post('/:orgId', async(req, res) => {
     try {
-        const { title, description, severity } = req.body;
+        let { title, description, severity, visibility } = req.body;
         const userId = req.jwt_payload._id;
         const orgId = req.params.orgId;
+        const { head, rank1, rank2 } = await Org.findById(orgId)
+        if (!(head == userId || rank1.includes(userId) || rank2.includes(userId))) {
+            visibility = 'public'
+        }
         const createBug = new Bug({
             title,
             description,
             severity,
             orgId,
-            createdBy: userId
+            createdBy: userId,
+            visibility
         })
         await createBug.save();
         await Org.findByIdAndUpdate(orgId, { $addToSet: { bugs: createBug._id } })
