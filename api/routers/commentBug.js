@@ -6,14 +6,15 @@ router.post('/bug/:bugId', async(req, res) => {
         const bugId = req.params.bugId;
         const userId = req.jwt_payload._id;
         const { description } = req.body;
-        await Bug.findByIdAndUpdate(bugId, { $addToSet: { comment: description } })
+
         const createDisc = new Discussion({
             description,
             openedBy: userId
         })
         await createDisc.save()
+        await Bug.findByIdAndUpdate(bugId, { $addToSet: { comment: createDisc._id } })
         res.status(200).json({
-            message: "Commented to bug"
+            message: "bug commented"
         })
     } catch (err) {
         console.log(err.message)
@@ -28,12 +29,13 @@ router.post('/comment/:commentId', async(req, res) => {
         const commentId = req.params.commentId;
         const userId = req.jwt_payload._id;
         const { description } = req.body;
-        await Discussion.findByIdAndUpdate(commentId, { $addToSet: { comments: description } })
+
         const createDisc = new Discussion({
             description,
             openedBy: userId
         })
         await createDisc.save()
+        await Discussion.findByIdAndUpdate(commentId, { $addToSet: { comments: createDisc._id } })
         res.status(200).json({
             message: "Commented to a discussion"
         })

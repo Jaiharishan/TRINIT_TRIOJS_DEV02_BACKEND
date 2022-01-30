@@ -4,7 +4,11 @@ const router = require('express').Router();
 router.get('/:orgId', async(req, res) => {
     try {
         const orgId = req.params.orgId;
-        const bugList = await Bug.findById(orgId).populate('bugs').select('bugs')
+        const bugList = await Org.findById(orgId)
+            .populate({
+                path: 'bugs',
+                populate: { path: 'createdBy', select: '-password' }
+            }).select('bugs')
         res.status(200).json({
             message: bugList
         })

@@ -6,7 +6,28 @@ router.get('/:bugId', async(req, res) => {
     try {
         const bugId = req.params.bugId;
         const bugDetails = await Bug.findById(bugId)
-            .populate('comment orgId assignRequests')
+            .populate({
+                path: 'comment',
+                populate: {
+                    path: 'openedBy',
+                    select: 'userName profilePic',
+
+
+                }
+            })
+            .populate({
+                path: 'comment',
+                populate: {
+                    path: 'comments',
+                    populate: {
+                        path: 'openedBy',
+                        select: 'userName profilePic'
+                    }
+                }
+            })
+
+
+        .populate('orgId assignRequests assignedTo')
         res.status(200).json({
             message: bugDetails
         })

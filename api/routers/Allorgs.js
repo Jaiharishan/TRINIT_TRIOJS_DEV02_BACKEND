@@ -21,7 +21,7 @@ router.get('/:orgId', async(req, res) => {
             .populate({ path: 'head', select: '-password' })
             .populate({ path: 'rank1', select: '-password' })
             .populate({ path: 'rank2', select: '-password' })
-            .populate('bugs');
+            .populate({ path: 'bugs', populate: { path: 'createdBy', select: '-password' } });
         res.status(200).json({
             data: orgDetails
         })
